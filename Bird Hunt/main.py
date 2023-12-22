@@ -5,8 +5,8 @@ screen = pygame.display.set_mode((540, 480)) # configura janela do jogo
 clock = pygame.time.Clock()
 
 pygame.font.init()
-my_font = pygame.font.SysFont('font.ttf', 40)
-menu_font = pygame.font.SysFont('font.ttf', 98)
+my_font = pygame.font.SysFont('Assets/font.ttf', 40)
+menu_font = pygame.font.SysFont('Assets/font.ttf', 98)
 
 def menu():
     pygame.display.set_caption("Bird Hunt - Menu")
@@ -16,15 +16,15 @@ def menu():
         menutext = menu_font.render("Bird Hunt", True, ("White"))
         menurect = menutext.get_rect(center = (270, 50))
 
-        Bg = pygame.image.load("Background.png")
+        Bg = pygame.image.load("Assets/Background.png")
         Bgrect = Bg.get_rect(center = (270, 240))
 
-        playbg = pygame.image.load("Button Rect.png")
+        playbg = pygame.image.load("Assets/Button Rect.png")
         playrect = playbg.get_rect(center = (270, 200))
         playtext = menu_font.render("Play", True, (0, 0, 0))
         playtextrect = playtext.get_rect(center = (270, 200))
 
-        quitbg = pygame.image.load("Button Rect.png")
+        quitbg = pygame.image.load("Assets/Button Rect.png")
         quitrect = quitbg.get_rect(center = (270, 350))
         quittext = menu_font.render("Quit", True, (0, 0, 0))
         quittextrect = quittext.get_rect(center = (270, 350))
@@ -60,21 +60,21 @@ def game():
     y3 = 480
     y4 = 480
 
-    bg = pygame.image.load('Novo Projeto.png')
+    bg = pygame.image.load('Assets/Novo Projeto.png')
 
-    duck1 = pygame.image.load('duck1.png')
+    duck1 = pygame.image.load('Assets/duck1.png')
     duck1 = duck1.convert_alpha()
 
-    duck2 = pygame.image.load('duck2.png')
+    duck2 = pygame.image.load('Assets/duck2.png')
     duck2 = duck2.convert_alpha()
 
-    duck3 = pygame.image.load('duck3.png')
+    duck3 = pygame.image.load('Assets/duck3.png')
     duck3 = duck3.convert_alpha()
 
-    dead_duck1 = pygame.image.load("dead_duck.png")
+    dead_duck1 = pygame.image.load("Assets/dead_duck.png")
     dead_duck1 = dead_duck1.convert_alpha()
 
-    dead_duck2 = pygame.image.load("falling_duck.png")
+    dead_duck2 = pygame.image.load("Assets/falling_duck.png")
     dead_duck2 = dead_duck2.convert_alpha()
 
     kills = 0
@@ -92,7 +92,7 @@ def game():
     deadenemy3 = dead_duck1
 
     pygame.mouse.set_visible(False)
-    cursor_img = pygame.image.load("Novo Projeto(1).png")
+    cursor_img = pygame.image.load("Assets/Novo Projeto(1).png")
     cursor_img = cursor_img.convert_alpha()
     cursor_img_rect = cursor_img.get_rect()
 
