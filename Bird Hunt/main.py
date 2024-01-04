@@ -1,4 +1,6 @@
+from codecs import BOM_BE
 import pygame, random, sys
+
 
 pygame.init()
 screen = pygame.display.set_mode((540, 480)) # configura janela do jogo
@@ -48,17 +50,27 @@ def menu():
         pygame.display.flip() # Desenha o quadro atual na tela
         clock.tick(60)
 def game():
+    for num in range(1, 50):
+        if num % 10 == 0:
+            bombexplosion = pygame.image.load(f"Assets/Explosion{int(num/10)}.png")
+        if num == 50:
+            xexplosion = 700
+
     pygame.display.set_caption("Bird Hunt - Play")
     running = True
     x = 0
+    x1 = 540
     x2 = 0
     x3 = 0
     x4 = 0
+    xexplosion = 700
     v = 6
     y = random.randrange(0,300)
+    y1 = random.randrange(0,300)
     y2 = 480
     y3 = 480
     y4 = 480
+    yexplosion = 0
 
     bg = pygame.image.load('Assets/Novo Projeto.png')
 
@@ -76,6 +88,9 @@ def game():
 
     dead_duck2 = pygame.image.load("Assets/falling_duck.png")
     dead_duck2 = dead_duck2.convert_alpha()
+
+    dynamite = pygame.image.load("Assets/dynamite.png")
+    dynamite = dynamite.convert_alpha()
 
     kills = 0
 
@@ -109,6 +124,8 @@ def game():
 
         x = x + v
 
+        x1 = x1 + v
+
         y2 = y2 + v
 
         y3 = y3 + v
@@ -133,6 +150,9 @@ def game():
         if timerdeadduck3 == 15:
             deadenemy3 = dead_duck2
 
+        bomb = dynamite
+
+        bombpos = bomb.get_rect(topleft = (x1, y1))
         enemypos = enemy.get_rect(topleft = (x, y))
 
         for event in pygame.event.get():
@@ -140,7 +160,24 @@ def game():
                 running = False
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                if bombpos.collidepoint(event.pos):
+                    kills = kills - 5
+                    xexplosion = x1
+                    yexplosion = y1
+                    x1 = 700
+                    y1 = random.randrange(0, 300)
+                    for num in range(1, 50):
+                        if num % 10 == 0:
+                            bombexplosion = pygame.image.load(f"Assets/Explosion{int(num/10)}.png")
+                        if num == 50:
+                            xexplosion = 700
+
                 if enemypos.collidepoint(event.pos):
+                    spawn_rate = random.randrange(0, 10)
+                    print(spawn_rate)
+                    if spawn_rate == 9:
+                        x1 = 0
+                        y1 = random.randrange(0, 300)
                     if counterdeadduck == 0:
                         timerdeadduck1 = 0
                         deadenemy = dead_duck1
@@ -173,6 +210,8 @@ def game():
         screen.blit(deadenemy3, (x4, y4))
         screen.blit(cursor_img, cursor_img_rect) # draw the cursor
         screen.blit(enemy, (x, y)) # desenha figura sobre o quadro atual nas coordenadas indicadas
+        screen.blit(bomb, (x1, y1))
+        screen.blit(bombexplosion, (xexplosion, yexplosion))
         screen.blit(text_surface, (0,0))
         pygame.display.flip() # Desenha o quadro atual na tela
         clock.tick(60)
