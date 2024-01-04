@@ -7,7 +7,8 @@ clock = pygame.time.Clock()
 pygame.font.init() # initialize pygame fonts
 my_font = pygame.font.SysFont('Assets/font.ttf', 40)
 menu_font = pygame.font.SysFont('Assets/font.ttf', 98)
-v = 0
+
+best_score = 0
 
 def menu(): # creates the main menu screen
     pygame.mouse.set_visible(True)
@@ -17,6 +18,8 @@ def menu(): # creates the main menu screen
 
     while running:
         pygame.mouse.set_visible(True)
+
+        scoretext = my_font.render(f"Best score: {str(best_score)}", True, ("White"))
         
         menutext = menu_font.render("Bird Hunt", True, ("White"))
         menurect = menutext.get_rect(center = (270, 50))
@@ -50,6 +53,7 @@ def menu(): # creates the main menu screen
         screen.blit(quittext, quittextrect)
         screen.blit(playbg, playrect)
         screen.blit(playtext, playtextrect)
+        screen.blit(scoretext, (90, 420))
         pygame.display.flip() # puts the current frame on the screen
         clock.tick(60)
 
@@ -113,6 +117,8 @@ def easygame(): # creates the main game screen
     y4 = 480
     yexplosion = 0
 
+    global best_score
+
     bg = pygame.image.load('Assets/Novo Projeto.png')
 
     duck1 = pygame.image.load('Assets/duck1.png')
@@ -172,6 +178,8 @@ def easygame(): # creates the main game screen
 
     countertime = 0
     while running:
+        tiro = pygame.mixer.Sound('Assets/tiro.wav')
+        tiro.set_volume(0.05)
         countertime = int(time.time() - beginning) # counts the time since the start of the game
 
         cursor_img_rect.center = pygame.mouse.get_pos()  # update mouse position 
@@ -241,6 +249,7 @@ def easygame(): # creates the main game screen
                 running = False
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                tiro.play()
                 if bombpos.collidepoint(event.pos):
                     timerexplosion = 0
                     kills = kills - 5
@@ -280,7 +289,8 @@ def easygame(): # creates the main game screen
             x = 0 
 
         if countertime >= 60:
-            print(f"You got {int(kills)} points!")
+            if kills > best_score:
+                best_score = kills
             running = False
         screen.blit(bg, (0, 0))
         screen.blit(deadenemy, (x2, y2))
@@ -291,7 +301,7 @@ def easygame(): # creates the main game screen
         screen.blit(bomb, (x1, y1))
         screen.blit(explosion, (xexplosion, yexplosion))
         screen.blit(points_surface, (0,0))
-        screen.blit(time_surface, (50, 0))
+        screen.blit(time_surface, (510, 0))
         pygame.display.flip()
         clock.tick(60)
 
@@ -312,6 +322,8 @@ def mediumgame(): # creates the main game screen
     y3 = 480
     y4 = 480
     yexplosion = 0
+
+    global best_score
 
     bg = pygame.image.load('Assets/Novo Projeto.png')
 
@@ -372,6 +384,8 @@ def mediumgame(): # creates the main game screen
 
     countertime = 0
     while running:
+        tiro = pygame.mixer.Sound('Assets/tiro.wav')
+        tiro.set_volume(0.05)
         countertime = int(time.time() - beginning) # counts the time since the start of the game
 
         cursor_img_rect.center = pygame.mouse.get_pos()  # update mouse position 
@@ -441,6 +455,7 @@ def mediumgame(): # creates the main game screen
                 running = False
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                tiro.play()
                 if bombpos.collidepoint(event.pos):
                     timerexplosion = 0
                     kills = kills - 5
@@ -480,7 +495,8 @@ def mediumgame(): # creates the main game screen
             x = 0 
 
         if countertime >= 60:
-            print(f"You got {int(kills)} points!")
+            if kills > best_score:
+                best_score = kills
             running = False
         screen.blit(bg, (0, 0))
         screen.blit(deadenemy, (x2, y2))
@@ -491,7 +507,7 @@ def mediumgame(): # creates the main game screen
         screen.blit(bomb, (x1, y1))
         screen.blit(explosion, (xexplosion, yexplosion))
         screen.blit(points_surface, (0,0))
-        screen.blit(time_surface, (50, 0))
+        screen.blit(time_surface, (510, 0))
         pygame.display.flip()
         clock.tick(60)
 
